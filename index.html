@@ -317,8 +317,8 @@ function findLocation(lines, i, doc){
     if (s && !/^(AM|PM|Noon)$/i.test(s) && !MONTH_ONLY.test(s)) return s;
   }
   if (i+1 < lines.length){
-    m = /^\s*(?:at|@)\s+(?:the\s+)?(.{3,60})$/i.exec(lines[i+1]);
-    if (m && !/\d{1,2}(?::\d\d)?\s*[ap]\.?m/i.test(m[1])) return clean(lines[i+1].replace(/^\s*(?:at|@)\s+/i, ''));
+    m = /^\s*(?:at|@)\s+((?:[Tt]he\s+)?(?:[A-Z0-9][\w'&.#-]*\s?){1,6}(?:,\s*[A-Z][a-z]+)?)/.exec(lines[i+1]);
+    if (m && !/\d{1,2}(?::\d\d)?\s*[ap]\.?m/i.test(m[1])) return clean(m[1]);
   }
   m = /\b(gym|cafeteria|library|auditorium|room\s*\d+[a-z]?)\b/i.exec(lines[i]);
   if (m) return m[1].charAt(0).toUpperCase()+m[1].slice(1);
