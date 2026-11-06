@@ -269,6 +269,14 @@ function findTime(line){
     }
     if (+m[1] <= 12 && (m[8] || +m[4] <= 12)) return {start:fmt(st), end:fmt(end), idx:m.index, len:m[0].length};
   }
+  // range with no AM/PM: 11:30-2:30, 6:30-8
+  m = /\b(\d{1,2})(?::(\d{2}))?\s*(?:-|–|—|to)\s*(\d{1,2})(?::(\d{2}))?\b(?!\s*(?:\/|%|[ap]\.?m))/i.exec(line);
+  if (m && (m[2] || m[4]) && +m[1] >= 1 && +m[1] <= 12 && +m[3] >= 1 && +m[3] <= 12){
+    var guess = function(h){ h = +h; return (h >= 1 && h <= 7) ? h + 12 : (h === 12 ? 12 : h); };
+    var sh = guess(m[1]), eh = guess(m[3]);
+    if (sh*60 + +(m[2]||0) >= eh*60 + +(m[4]||0) && sh >= 12) sh -= 12;
+    return {start: pad(sh)+':'+(m[2]||'00'), end: pad(eh)+':'+(m[4]||'00'), idx:m.index, len:m[0].length};
+  }
   // single with am/pm
   m = new RegExp('\\b(\\d{1,2})(?::(\\d{2}))?\\s*'+M+'(?![a-z])', 'i').exec(line);
   if (m && +m[1] >= 1 && +m[1] <= 12) return {start:fmt(to24(m[1], m[2], m[3])), end:null, idx:m.index, len:m[0].length};
@@ -303,10 +311,14 @@ function findLocation(lines, i, doc){
   for (j = i-1; j >= Math.max(0, i-2); j--){ m = labeled.exec(lines[j]); if (m) return clean(m[1]); }
   var all = doc.split('\n');
   for (j = 0; j < all.length; j++){ m = labeled.exec(all[j]); if (m) return clean(m[1]); }
-  m = /\b(?:at|in)\s+(?:the\s+)?((?:[A-Z][\w'&.]*\s?){1,5}(?:Gym|Cafeteria|Library|Auditorium|Room\s*\d+|Center|Centre|Park|School|Hall|Field|Church|Office|Clinic|Hospital|Building|Theater|Theatre|Stadium)?)/.exec(lines[i]);
+  m = /\b(?:at|in)\s+(?:the\s+)?((?:[A-Z][\w'&.]*\s?){1,5}(?:Gym|Cafeteria|Library|Auditorium|Room\s*\d+|Center|Centre|Park|School|Hall|Field|Church|Office|Clinic|Hospital|Building|Theater|Theatre|Stadium)?(?:,\s*[A-Z][a-z]+(?:\s[A-Z][a-z]+)?)?)/.exec(lines[i]);
   if (m){
     var s = clean(m[1]);
     if (s && !/^(AM|PM|Noon)$/i.test(s) && !MONTH_ONLY.test(s)) return s;
+  }
+  if (i+1 < lines.length){
+    m = /^\s*(?:at|@)\s+(?:the\s+)?(.{3,60})$/i.exec(lines[i+1]);
+    if (m && !/\d{1,2}(?::\d\d)?\s*[ap]\.?m/i.test(m[1])) return clean(lines[i+1].replace(/^\s*(?:at|@)\s+/i, ''));
   }
   m = /\b(gym|cafeteria|library|auditorium|room\s*\d+[a-z]?)\b/i.exec(lines[i]);
   if (m) return m[1].charAt(0).toUpperCase()+m[1].slice(1);
@@ -321,6 +333,7 @@ function firstLine(lines, i){
   for (var j = b; j < lines.length; j++){ var t = clean(lines[j]); if ((t.match(/[a-z]/gi)||[]).length >= 3) return t; }
   return '';
 }
+function isCaps(t){ var L = t.replace(/[^a-z]/gi, ''); return L.length > 2 && L === L.toUpperCase(); }
 var GENERIC = /\b(your next|scheduled|reminder|please|amount|account|balance|statement|due date|total)\b/i;
 function makeTitle(line, cuts, lines, i, kind, loc){
   var s = line, k;
@@ -349,10 +362,16 @@ function makeTitle(line, cuts, lines, i, kind, loc){
     // otherwise borrow the nearest heading-like line above
     for (var j = i-1; j >= 0 && !s; j--){
       var t = clean(lines[j]);
-      if ((t.match(/[a-z]/gi)||[]).length >= 4 && !GENERIC.test(t) && !/^(location|where|place|venue|address|room)\s*[:\-–]/i.test(t)){ s = t; break; }
+      if ((t.match(/[a-z]/gi)||[]).length >= 4 && !GENERIC.test(t) && !/^(location|where|place|venue|address|room)\s*[:\-–]/i.test(t)){
+        s = t;
+        var up = clean(lines[j-1] || '');
+        if (j > 0 && up.length && up.length < 40 && t.length < 40 && isCaps(up) === isCaps(t) && !findDates(up, new Date()).length) s = up + ' ' + t;
+        break;
+      }
     }
     if ((s.match(/[a-z]/gi)||[]).length < 4) s = KIND_LABEL[kind] === 'Event' ? 'New event' : KIND_LABEL[kind];
   }
+  if (isCaps(s)) s = s.toLowerCase().replace(/\b([a-z])/g, function(c){ return c.toUpperCase(); }).replace(/\b(A|An|And|The|Of|At|For|To|In|On)\b/g, function(w, x, o){ return o ? w.toLowerCase() : w; });
   if (s.length > 80) s = s.slice(0, 78).replace(/\s+\S*$/, '') + '…';
   if (kind === 'due' && !/\bdue\b/i.test(s)) s = 'Due: ' + s;
   return s;
@@ -367,7 +386,9 @@ function parse(text, today, defLen){
   var events = [], seen = {};
   for (var i = 0; i < lines.length; i++){
     var line = lines[i]; if (!line.trim()) continue;
-    var ds = findDates(line, today);
+    if (/https?:\/\/|www\.|\.(?:png|jpe?g|pdf)\b/i.test(line)) continue;   // printed URLs / file names
+    if (/^\s*\d{1,2}\s*\/\s*\d{1,2}\s*$/.test(line)) continue;            // page numbers like "1/1"
+    var ds = findDates(line, today).filter(function(d){ return (d.end || d.start) >= today; });  // past dates (print stamps) skipped
     if (!ds.length) continue;
     var masked = line;
     ds.forEach(function(d){ masked = masked.slice(0, d.idx) + new Array(d.len+1).join(' ') + masked.slice(d.idx + d.len); });
