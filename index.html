@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Paper Catch</title>
+<meta name="theme-color" content="#1f3a5f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Paper Catch">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAACkElEQVR42u3cMU4yQRiA4Y+NN/AAJIbCmsrQGe4hR5Cj4BW4B7G1orYg3sA7WJiQLYzR7MJ+M/O8B/hx53/4Biajs/lqE9JPdZZAcAgOwSE4BIfgEByCQ3AIDgkOwSE4BIfgEByCQ3AIDsEhwSE4BIfgEByCQ3AIDtXWTcKf6XTYlbiUH+/Hu/vlkH9hsd6meqJZqj/BUCiLM46IGOgjFZEsOIpm0ccxio8kRDoyLqek9DXpyOAjKY4qZVTjw1fZ7D4axVHx2BjRx4SrZHKYH/lwtDA2xvIx1VqZHOYHHHzAwQccfMDBBxx8wKHCfMDBBxx8wMEHHHzAwQccyukDDj7g4AMOPuDgAw4+wu/K/qfP56frvNDty76C379tBcfVWPRfbnIiE/qwrdhfyp8cVx4b/df94/C48Pt7b3IoHIIJDsEhOKZsqq+UGU474FD4a4JD38RNnZDC4f/MtiI4BIfgEBwSHIJDcCgcgvU7vr2Wu9zLh0c4sPjtEUohYltR+TgqGBvFPYvJIThUMY6yPufX8Swmh6r4Kvv9hnPOAUcT+4ttRXAIDsEhwSE4BIfgUDgECzfB4HATzLYinzmMDTfBZHIIDp/zPYvJITfBzAw3wWRbERyCQ3AIDsEhOCQ4FG6ChRM8N8HcBLOtCA43weAQHILD5/xwE0zhnMNNMOcc1le2FcEhOASH4BAcgkNwCA7BIcEhOASH4BAcgkNwCA7BMWaL9dbqJ18rk0MpcRgeyVfJ5FBWHIZH5vXpGn9+MrJvK3zkXJPZfLXJsyKnww6LPG+VXDgaJ5JtgmbEId9WBIfgEByCQ4JDcAgOwSE4BIfgEByCQ3AIDgkOwSE4BIfgEByCQ3AIDsEhwSE4NKgv6GLQ6j9ez64AAAAASUVORK5CYII=">
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAACkElEQVR42u3cMU4yQRiA4Y+NN/AAJIbCmsrQGe4hR5Cj4BW4B7G1orYg3sA7WJiQLYzR7MJ+M/O8B/hx53/4Biajs/lqE9JPdZZAcAgOwSE4BIfgEByCQ3AIDgkOwSE4BIfgEByCQ3AIDsEhwSE4BIfgEByCQ3AIDtXWTcKf6XTYlbiUH+/Hu/vlkH9hsd6meqJZqj/BUCiLM46IGOgjFZEsOIpm0ccxio8kRDoyLqek9DXpyOAjKY4qZVTjw1fZ7D4axVHx2BjRx4SrZHKYH/lwtDA2xvIx1VqZHOYHHHzAwQccfMDBBxx8wKHCfMDBBxx8wMEHHHzAwQccyukDDj7g4AMOPuDgAw4+wu/K/qfP56frvNDty76C379tBcfVWPRfbnIiE/qwrdhfyp8cVx4b/df94/C48Pt7b3IoHIIJDsEhOKZsqq+UGU474FD4a4JD38RNnZDC4f/MtiI4BIfgEBwSHIJDcCgcgvU7vr2Wu9zLh0c4sPjtEUohYltR+TgqGBvFPYvJIThUMY6yPufX8Swmh6r4Kvv9hnPOAUcT+4ttRXAIDsEhwSE4BIfgUDgECzfB4HATzLYinzmMDTfBZHIIDp/zPYvJITfBzAw3wWRbERyCQ3AIDsEhOCQ4FG6ChRM8N8HcBLOtCA43weAQHILD5/xwE0zhnMNNMOcc1le2FcEhOASH4BAcgkNwCA7BIcEhOASH4BAcgkNwCA7BMWaL9dbqJ18rk0MpcRgeyVfJ5FBWHIZH5vXpGn9+MrJvK3zkXJPZfLXJsyKnww6LPG+VXDgaJ5JtgmbEId9WBIfgEByCQ4JDcAgOwSE4BIfgEByCQ3AIDgkOwSE4BIfgEByCQ3AIDsEhwSE4NKgv6GLQ6j9ez64AAAAASUVORK5CYII=">
+<style>
+:root{
+  --bg:#f4efe6; --paper:#fffdf8; --ink:#1c2a3a; --ink2:#5b6675; --line:#e4dccd;
+  --navy:#1f3a5f; --coral:#e8664d; --coral2:#fbe3dc; --teal:#2f7d6d; --teal2:#dcefe9;
+  --amber:#b7791f; --amber2:#f8ecd3; --radius:16px;
+  --shadow:0 1px 2px rgba(28,42,58,.06),0 6px 20px rgba(28,42,58,.07);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.45 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  padding-bottom:calc(32px + env(safe-area-inset-bottom))}
+header{background:var(--navy);color:#fff;padding:calc(18px + env(safe-area-inset-top)) 20px 22px;
+  border-radius:0 0 24px 24px}
+.brand{display:flex;align-items:center;gap:12px;max-width:640px;margin:0 auto}
+.brand svg{flex:none}
+.brand h1{margin:0;font-size:22px;letter-spacing:-.01em}
+.brand p{margin:2px 0 0;font-size:13px;opacity:.75}
+main{max-width:640px;margin:0 auto;padding:16px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;margin-bottom:14px}
+.step{display:flex;align-items:center;gap:10px;margin:0 0 10px;font-size:15px;font-weight:650}
+.num{width:24px;height:24px;border-radius:50%;background:var(--navy);color:#fff;font-size:13px;display:grid;place-items:center;flex:none}
+textarea,input,select{font:inherit;color:inherit;width:100%;border:1px solid var(--line);border-radius:12px;background:#fff;padding:10px 12px;outline:none;-webkit-appearance:none;appearance:none}
+textarea:focus,input:focus,select:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(31,58,95,.12)}
+#src{min-height:150px;resize:vertical;font-size:15px}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.row>*{flex:1 1 0}
+button,.btn{font:inherit;font-weight:600;border:0;border-radius:12px;padding:11px 14px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;min-height:44px;-webkit-tap-highlight-color:transparent}
+.primary{background:var(--coral);color:#fff}
+.primary:active{filter:brightness(.92)}
+.ghost{background:#efe8dc;color:var(--ink)}
+.subtle{background:transparent;color:var(--ink2);padding:8px 10px;min-height:36px;font-weight:500}
+.mt{margin-top:10px}
+details.help{margin-top:10px;font-size:14px;color:var(--ink2)}
+details.help summary{cursor:pointer;font-weight:600;color:var(--navy)}
+details.help ol{margin:8px 0 0;padding-left:20px}
+.empty{text-align:center;color:var(--ink2);font-size:14px;padding:18px 8px}
+.ev{position:relative;border-left:5px solid var(--navy)}
+.ev.k-due{border-left-color:var(--coral)}
+.ev.k-appt{border-left-color:var(--teal)}
+.ev.k-school{border-left-color:var(--amber)}
+.ev.added{opacity:.72}
+.evtop{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.chip{font-size:12px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;padding:4px 9px;border-radius:999px;background:#e6ebf2;color:var(--navy);border:0;min-height:0}
+.k-due .chip{background:var(--coral2);color:#a8412d}
+.k-appt .chip{background:var(--teal2);color:var(--teal)}
+.k-school .chip{background:var(--amber2);color:#8a5a12}
+.when{font-size:13px;color:var(--ink2);flex:1}
+.x{background:transparent;color:var(--ink2);min-height:32px;padding:4px 8px;font-size:20px;line-height:1}
+label.f{display:block;font-size:12px;font-weight:600;color:var(--ink2);margin:8px 0 4px;text-transform:uppercase;letter-spacing:.04em}
+.title-in{font-size:17px;font-weight:600}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
+.grid2>div{min-width:0}
+.grid2 input{min-width:0;max-width:100%}
+.toggle{display:flex;align-items:center;gap:8px;font-size:14px;margin-top:10px;color:var(--ink2)}
+.toggle input{width:20px;height:20px;-webkit-appearance:checkbox;appearance:auto;margin:0;accent-color:var(--navy)}
+details.srcbox{margin-top:10px;font-size:13px;color:var(--ink2)}
+details.srcbox summary{cursor:pointer}
+.acts{display:flex;gap:8px;margin-top:12px}
+.acts .primary{flex:2}
+.acts .ghost{flex:1}
+.done-badge{display:none;font-size:13px;font-weight:700;color:var(--teal)}
+.ev.added .done-badge{display:inline}
+.toolbar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:4px 2px 10px}
+.toolbar h2{font-size:15px;margin:0}
+.hist li{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
+.hist li:last-child{border-bottom:0}
+.hist ul{list-style:none;margin:0;padding:0}
+.hist .d{color:var(--ink2);white-space:nowrap}
+.foot{text-align:center;color:var(--ink2);font-size:12px;margin-top:8px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(120px);background:var(--ink);color:#fff;padding:10px 16px;border-radius:12px;font-size:14px;transition:transform .25s,opacity .25s;z-index:9;max-width:90vw;opacity:0;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.settings{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><rect x="7" y="4" width="26" height="32" rx="4" fill="#fbf7ef"/><path d="M25 4l8 8h-8z" fill="#d9cfbd"/><rect x="11" y="13" width="10" height="3" rx="1.5" fill="#e8664d"/><rect x="11" y="19" width="17" height="2.5" rx="1.25" fill="#c9bfae"/><rect x="11" y="24" width="17" height="2.5" rx="1.25" fill="#c9bfae"/><rect x="11" y="29" width="12" height="2.5" rx="1.25" fill="#c9bfae"/></svg>
+    <div><h1>Paper Catch</h1><p>Flyers, bills &amp; appointment cards → your calendar</p></div>
+  </div>
+</header>
+<main>
+  <section class="card">
+    <div class="step"><span class="num">1</span>Paste the text from your photo</div>
+    <textarea id="src" placeholder="Paste here… e.g.&#10;Lincoln Elementary Fall Concert&#10;Thursday, Nov 19 · 6:30–7:30 PM&#10;Location: School Gym"></textarea>
+    <div class="row mt">
+      <button class="ghost" id="pasteBtn" type="button">📋 Paste</button>
+      <button class="primary" id="findBtn" type="button">Find dates</button>
+    </div>
+    <details class="help">
+      <summary>How to copy text from a photo</summary>
+      <ol>
+        <li>Open the photo (or point the Camera at the paper).</li>
+        <li>Tap the <b>Live Text</b> icon (lines in a box), or press and hold on the words.</li>
+        <li>Tap <b>Copy All</b>, come back here, and tap <b>Paste</b>.</li>
+      </ol>
+      <p>Nothing you paste leaves your phone. Only when you tap <b>Add</b> is that one event sent to Google Calendar.</p>
+    </details>
+  </section>
+
+  <div class="toolbar">
+    <h2><span class="num" style="display:inline-grid;margin-right:8px">2</span>Check &amp; add</h2>
+    <button class="subtle" id="manualBtn" type="button">＋ Add manually</button>
+  </div>
+  <div id="events"><div class="card empty">Dates you paste will show up here as events you can edit.</div></div>
+  <div class="row" id="bulk" style="display:none;margin-bottom:14px">
+    <button class="ghost" id="icsAll" type="button">⬇︎ All as .ics</button>
+    <button class="subtle" id="clearEv" type="button">Clear list</button>
+  </div>
+
+  <section class="card hist" id="histCard" style="display:none">
+    <div class="toolbar" style="margin:0 0 6px"><h2>Recently added</h2><button class="subtle" id="clearHist" type="button">Clear</button></div>
+    <ul id="hist"></ul>
+  </section>
+
+  <details class="card help" style="margin-top:0">
+    <summary>Settings</summary>
+    <div class="settings mt">
+      <div><label class="f" for="setLen">Default length</label>
+        <select id="setLen"><option value="30">30 min</option><option value="60">1 hour</option><option value="90">1.5 hours</option><option value="120">2 hours</option></select></div>
+      <div><label class="f" for="setTz">Time zone</label><input id="setTz"></div>
+    </div>
+  </details>
+  <p class="foot">Private &amp; offline · nothing is stored on any server</p>
+</main>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+'use strict';
+
+/* ---------- storage (best effort) ---------- */
+var store = {
+  get: function(k, d){ try{ var v = localStorage.getItem('pc_'+k); return v ? JSON.parse(v) : d; }catch(e){ return d; } },
+  set: function(k, v){ try{ localStorage.setItem('pc_'+k, JSON.stringify(v)); }catch(e){} }
+};
+
+/* ---------- date helpers ---------- */
+var MONTHS = {jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
+var WD = {sun:0,mon:1,tue:2,wed:3,thu:4,fri:5,sat:6};
+function pad(n){ return (n<10?'0':'')+n; }
+function ymd(d){ return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()); }
+function fromYmd(s){ var p=s.split('-'); return new Date(+p[0], +p[1]-1, +p[2]); }
+function addDays(d,n){ var x=new Date(d.getFullYear(), d.getMonth(), d.getDate()+n); return x; }
+function validDate(y,m,d){ var x=new Date(y,m,d); return x.getFullYear()===y && x.getMonth()===m && x.getDate()===d; }
+function inferYear(m, d, today){
+  var y = today.getFullYear();
+  var cand = new Date(y, m, d);
+  if (cand < addDays(today, -45)) y++;
+  return y;
+}
+function fixYear(y){ y=+y; if (y<100) y+=2000; return y; }
+
+var MON_RE = '(jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?|sept?(?:ember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)';
+var ORD = '(?:st|nd|rd|th)?';
+
+/* Find explicit dates in one line. Returns [{start:Date,end:Date|null,idx,len}] */
+function findDates(line, today){
+  var out = [], m, re;
+  var taken = [];
+  function free(i, l){ for (var k=0;k<taken.length;k++){ if (i < taken[k][1] && i+l > taken[k][0]) return false; } return true; }
+  function push(i, l, s, e){ if (!free(i,l)) return; taken.push([i,i+l]); out.push({start:s,end:e||null,idx:i,len:l}); }
+
+  // ISO 2026-11-19
+  re = /\b(20\d\d)-(\d{1,2})-(\d{1,2})\b/g;
+  while ((m = re.exec(line))){ var Y=+m[1],M=+m[2]-1,D=+m[3]; if (validDate(Y,M,D)) push(m.index, m[0].length, new Date(Y,M,D)); }
+
+  // Month name: Nov 19, Nov. 19th, November 19-21, 2026 ; also "Nov 30 - Dec 2"
+  re = new RegExp('\\b'+MON_RE+'\\.?\\s+(\\d{1,2})'+ORD+'(?:\\s*(?:-|–|—|to|through|thru)\\s*(?:'+MON_RE+'\\.?\\s+)?(\\d{1,2})'+ORD+')?(?:,?\\s+(\\d{4}))?(?![\\d:])', 'gi');
+  while ((m = re.exec(line))){
+    var mo = MONTHS[m[1].slice(0,3).toLowerCase()], d1 = +m[2];
+    var y = m[5] ? +m[5] : inferYear(mo, d1, today);
+    if (!validDate(y, mo, d1)) continue;
+    var s = new Date(y, mo, d1), e = null, mlen = m[0].length;
+    if (m[4]){
+      var mo2 = m[3] ? MONTHS[m[3].slice(0,3).toLowerCase()] : mo, d2 = +m[4];
+      var y2 = (mo2 < mo) ? y+1 : y;
+      if (validDate(y2, mo2, d2)){ e = new Date(y2, mo2, d2); if (e <= s || (e - s) > 40*864e5) e = null; }
+      if (!e){ // not a real range (e.g. "Nov 9 - 7pm"): keep only "Nov 9"
+        var head = new RegExp('^'+MON_RE+'\\.?\\s+\\d{1,2}'+ORD, 'i').exec(m[0]);
+        mlen = head ? head[0].length : mlen;
+      }
+    }
+    push(m.index, mlen, s, e);
+  }
+
+  // Day Month: 19 November (2026)
+  re = new RegExp('\\b(\\d{1,2})'+ORD+'\\s+(?:of\\s+)?'+MON_RE+'\\b(?:,?\\s+(\\d{4}))?', 'gi');
+  while ((m = re.exec(line))){
+    var mo3 = MONTHS[m[2].slice(0,3).toLowerCase()], d3 = +m[1];
+    var y3 = m[3] ? +m[3] : inferYear(mo3, d3, today);
+    if (validDate(y3, mo3, d3)) push(m.index, m[0].length, new Date(y3, mo3, d3));
+  }
+
+  // Numeric: 11/19, 11/19/26, 11-19-2026, 11.19.26
+  re = /(^|[^\d\/$.:])(\d{1,2})([\/\-.])(\d{1,2})(?:\3(\d{2,4}))?(?![\d\/:%]|\.\d)/g;
+  while ((m = re.exec(line))){
+    var sep = m[3], hasY = !!m[5];
+    var after = line.slice(m.index + m[0].length);
+    if (!hasY && (/^\s*(?:cups?|c\.|tsp|tbsp|teaspoons?|tablespoons?|inch|inches|in\b|"|ft|feet|miles?|mi\b|lbs?|oz|ounces?|pounds?|of\s+(?:a|an|the)\b)/i.test(after) || /\d\s$/.test(line.slice(0, m.index + m[1].length)))) continue;
+    if (sep !== '/' && !hasY) continue;          // "6-7" is not a date
+    var Mo = +m[2]-1, Dd = +m[4];
+    if (Mo<0 || Mo>11) continue;
+    var Yy = hasY ? fixYear(m[5]) : inferYear(Mo, Dd, today);
+    if (!validDate(Yy, Mo, Dd)) continue;
+    var i0 = m.index + m[1].length;
+    push(i0, m[0].length - m[1].length, new Date(Yy, Mo, Dd));
+  }
+
+  // Relative words (only if nothing explicit on the line)
+  if (!out.length){
+    re = /\b(today|tonight|tomorrow)\b/gi;
+    while ((m = re.exec(line))){
+      var w = m[1].toLowerCase();
+      push(m.index, m[0].length, w==='tomorrow' ? addDays(today,1) : new Date(today.getFullYear(),today.getMonth(),today.getDate()));
+    }
+    re = /\b(this|next|on)?\s*(sun|mon|tue|tues|wed|thu|thur|thurs|fri|sat)(?:day|nesday|rsday|urday|sday)?\b(?!\s*(?:-|–|through|thru|to)\s*\w)/gi;
+    while ((m = re.exec(line))){
+      var word = m[0].toLowerCase();
+      // skip plural recurring ("Mondays") and ranges ("Mon-Fri")
+      if (/s$/.test(m[0]) && !/(tues|thurs)$/.test(word) && /days$/.test(word)) continue;
+      if (/[-–]\s*$/.test(line.slice(0, m.index))) continue;
+      var wd = WD[m[2].slice(0,3).toLowerCase()];
+      var diff = (wd - today.getDay() + 7) % 7;
+      var dd = addDays(today, diff);
+      if (m[1] && m[1].toLowerCase()==='next') dd = addDays(dd, diff===0 ? 7 : 7);
+      push(m.index, m[0].length, dd);
+    }
+  }
+  out.sort(function(a,b){ return a.idx-b.idx; });
+  return out;
+}
+
+/* Find a time or time range. Returns {start:'HH:MM', end:'HH:MM'|null, idx, len} or null */
+function to24(h, mi, mer){
+  h = +h; mi = +(mi||0);
+  if (mer){ mer = mer.charAt(0).toLowerCase(); if (mer==='p' && h<12) h+=12; if (mer==='a' && h===12) h=0; }
+  return {h:h, m:mi};
+}
+function fmt(t){ return pad(t.h)+':'+pad(t.m); }
+function findTime(line){
+  var M = '(a\\.?\\s?m\\.?|p\\.?\\s?m\\.?)';
+  var m;
+  // range: 6-7:30pm, 6:30 PM – 8 PM, 11 to 1pm, 9am-noon
+  var rr = new RegExp('\\b(\\d{1,2})(?::(\\d{2}))?\\s*'+M+'?\\s*(?:-|–|—|to|until|till)\\s*(?:(\\d{1,2})(?::(\\d{2}))?\\s*'+M+'|(noon|midnight))', 'i');
+  m = rr.exec(line);
+  if (m && (m[3] || m[1].length && (m[2] || m[6] || m[8]))){
+    var end = m[8] ? (m[8].toLowerCase()==='noon' ? {h:12,m:0} : {h:23,m:59}) : to24(m[4], m[5], m[6]);
+    var st;
+    if (m[3]) st = to24(m[1], m[2], m[3]);
+    else {
+      var endMer = m[8] ? (m[8].toLowerCase()==='noon' ? 'pm':'am') : m[6];
+      st = to24(m[1], m[2], endMer);
+      if (st.h*60+st.m > end.h*60+end.m) st = to24(m[1], m[2], endMer.charAt(0).toLowerCase()==='p' ? 'am' : 'pm');
+    }
+    if (+m[1] <= 12 && (m[8] || +m[4] <= 12)) return {start:fmt(st), end:fmt(end), idx:m.index, len:m[0].length};
+  }
+  // single with am/pm
+  m = new RegExp('\\b(\\d{1,2})(?::(\\d{2}))?\\s*'+M+'(?![a-z])', 'i').exec(line);
+  if (m && +m[1] >= 1 && +m[1] <= 12) return {start:fmt(to24(m[1], m[2], m[3])), end:null, idx:m.index, len:m[0].length};
+  m = /\b(noon|midnight)\b/i.exec(line);
+  if (m) return {start: m[1].toLowerCase()==='noon' ? '12:00' : '00:00', end:null, idx:m.index, len:m[0].length};
+  // "at 6:30" / bare 18:30
+  m = /\b(\d{1,2}):(\d{2})\b(?!\s*(?:\/|%))/.exec(line);
+  if (m && +m[1] < 24 && +m[2] < 60){
+    var h = +m[1];
+    if (h >= 1 && h <= 7) h += 12;               // 1:00–7:59 with no AM/PM → afternoon/evening
+    return {start:pad(h)+':'+m[2], end:null, idx:m.index, len:m[0].length};
+  }
+  return null;
+}
+
+/* Kind of event */
+function kindOf(line, doc){
+  var l = line.toLowerCase(), d = doc.toLowerCase();
+  if (/\b(due|deadline|pay by|payment|return by|last day|no later than|must be (?:received|returned)|expires?|renew)\b/.test(l)) return 'due';
+  if (/\b(appointment|appt|visit|check[- ]?up|cleaning|exam|follow[- ]?up|your next|scheduled for|dr\.|doctor|dentist|clinic|office)\b/.test(l + ' ' + d.slice(0,400))) return 'appt';
+  if (/\b(school|class|student|parent|pta|pto|teacher|conference|field trip|concert|picture day|early (?:release|dismissal)|no school|grade|homeroom|principal|elementary|middle school)\b/.test(l + ' ' + d)) return 'school';
+  if (/\b(amount due|account (?:number|no)|statement|balance|bill)\b/.test(d)) return 'due';
+  return 'event';
+}
+var KIND_LABEL = {due:'Due', appt:'Appointment', school:'School', event:'Event'};
+
+/* Location */
+function findLocation(lines, i, doc){
+  var labeled = /^\s*(?:location|where|place|venue|address|room)\s*[:\-–]\s*(.+)$/i;
+  var j, m;
+  for (j = i; j <= Math.min(lines.length-1, i+3); j++){ m = labeled.exec(lines[j]); if (m) return clean(m[1]); }
+  for (j = i-1; j >= Math.max(0, i-2); j--){ m = labeled.exec(lines[j]); if (m) return clean(m[1]); }
+  var all = doc.split('\n');
+  for (j = 0; j < all.length; j++){ m = labeled.exec(all[j]); if (m) return clean(m[1]); }
+  m = /\b(?:at|in)\s+(?:the\s+)?((?:[A-Z][\w'&.]*\s?){1,5}(?:Gym|Cafeteria|Library|Auditorium|Room\s*\d+|Center|Centre|Park|School|Hall|Field|Church|Office|Clinic|Hospital|Building|Theater|Theatre|Stadium)?)/.exec(lines[i]);
+  if (m){
+    var s = clean(m[1]);
+    if (s && !/^(AM|PM|Noon)$/i.test(s) && !MONTH_ONLY.test(s)) return s;
+  }
+  m = /\b(gym|cafeteria|library|auditorium|room\s*\d+[a-z]?)\b/i.exec(lines[i]);
+  if (m) return m[1].charAt(0).toUpperCase()+m[1].slice(1);
+  return '';
+}
+var MONTH_ONLY = new RegExp('^'+MON_RE+'\\b', 'i');
+function clean(s){ return s.replace(/\s+/g,' ').replace(/^[\s,:;·•\-–—|]+|[\s,:;·•\-–—|]+$/g,'').trim(); }
+
+/* Title from line minus date/time bits */
+function firstLine(lines, i){
+  var b = i; while (b > 0 && lines[b-1].trim()) b--;          // start of this paragraph
+  for (var j = b; j < lines.length; j++){ var t = clean(lines[j]); if ((t.match(/[a-z]/gi)||[]).length >= 3) return t; }
+  return '';
+}
+var GENERIC = /\b(your next|scheduled|reminder|please|amount|account|balance|statement|due date|total)\b/i;
+function makeTitle(line, cuts, lines, i, kind, loc){
+  var s = line, k;
+  cuts.sort(function(a,b){ return b.idx-a.idx; });
+  for (k = 0; k < cuts.length; k++) s = s.slice(0, cuts[k].idx) + ' ' + s.slice(cuts[k].idx + cuts[k].len);
+  s = s.replace(/\b(?:on|at|from|by|starting|begins?|is|will be)\s*$/i, '')
+       .replace(/\b(?:sun|mon|tues?|wed(?:nes)?|thu(?:rs?)?|fri|sat(?:ur)?)(?:day)?\b\.?/gi, ' ')
+       .replace(/\b(?:date|time|when)\s*[:\-–]/gi, ' ')
+       .replace(/\(\s*\)/g, ' ');
+  if (loc){
+    var li = s.toLowerCase().indexOf(loc.toLowerCase());
+    if (li >= 0) s = s.slice(0, li).replace(/\b(?:at|in)\s+(?:the\s+)?$/i, '') + s.slice(li + loc.length);
+  }
+  s = s.replace(/\$\s?\d[\d,]*(?:\.\d\d)?/g, ' ')                         // no dollar amounts in titles
+       .replace(/^\s*(?:reminder|note|reminder notice)\s*[:\-–]\s*/i, '');
+  for (k = 0; k < 3; k++) s = s.replace(/\b(?:on|at|from|by|in|is|will be|starting|begins?)\s*(?=$|[,·•|]|\b(?:on|at|from|by|in)\b)/gi, ' ');
+  s = clean(s.replace(/\s*[,·•|]\s*(?=[,·•|]|$)/g, '').replace(/\s{2,}/g, ' '));
+  s = s.replace(/^(?:on|at|from|by)\s+/i, '');
+  var letters = (s.match(/[a-z]/gi) || []).length;
+  if (letters < 4 || GENERIC.test(s)){
+    s = '';
+    var top = firstLine(lines, i);
+    if ((kind === 'appt' || kind === 'due') && top && top !== clean(line)){
+      s = top.replace(/\$\s?\d[\d,]*(?:\.\d\d)?/g, '').trim() + (kind === 'appt' ? ' appointment' : ' bill');
+    }
+    // otherwise borrow the nearest heading-like line above
+    for (var j = i-1; j >= 0 && !s; j--){
+      var t = clean(lines[j]);
+      if ((t.match(/[a-z]/gi)||[]).length >= 4 && !GENERIC.test(t) && !/^(location|where|place|venue|address|room)\s*[:\-–]/i.test(t)){ s = t; break; }
+    }
+    if ((s.match(/[a-z]/gi)||[]).length < 4) s = KIND_LABEL[kind] === 'Event' ? 'New event' : KIND_LABEL[kind];
+  }
+  if (s.length > 80) s = s.slice(0, 78).replace(/\s+\S*$/, '') + '…';
+  if (kind === 'due' && !/\bdue\b/i.test(s)) s = 'Due: ' + s;
+  return s;
+}
+
+/* Main parser */
+function parse(text, today, defLen){
+  today = today || new Date(); today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  defLen = defLen || 60;
+  var doc = (text || '').replace(/\r/g,'').replace(/[\u00a0\u2009\u202f]/g,' ').replace(/[\u2010-\u2012]/g,'-');
+  var lines = doc.split('\n');
+  var events = [], seen = {};
+  for (var i = 0; i < lines.length; i++){
+    var line = lines[i]; if (!line.trim()) continue;
+    var ds = findDates(line, today);
+    if (!ds.length) continue;
+    var masked = line;
+    ds.forEach(function(d){ masked = masked.slice(0, d.idx) + new Array(d.len+1).join(' ') + masked.slice(d.idx + d.len); });
+    var tm = findTime(masked), tmLine = line;
+    if (!tm && i+1 < lines.length && !findDates(lines[i+1], today).length){ tm = findTime(lines[i+1]); tmLine = lines[i+1]; }
+    var kind = kindOf(line, doc);
+    var cuts = ds.map(function(d){ return {idx:d.idx, len:d.len}; });
+    if (tm && tmLine === line) cuts.push({idx:tm.idx, len:tm.len});
+    var loc = findLocation(lines, i, doc);
+    var title = makeTitle(line, cuts, lines, i, kind, loc);
+    var ctx = [lines[i-1], line, lines[i+1]].filter(function(x){ return x && x.trim(); }).join('\n');
+    for (var k = 0; k < ds.length; k++){
+      var d = ds[k];
+      var ev = {
+        id: 'e' + Math.random().toString(36).slice(2,9),
+        kind: kind, title: title, date: ymd(d.start), endDate: d.end ? ymd(d.end) : '',
+        allDay: !tm || !!d.end || kind === 'due',
+        start: tm ? tm.start : '', end: tm ? (tm.end || addMin(tm.start, defLen)) : '',
+        location: kind === 'due' ? '' : loc, notes: ctx.trim(), added: false
+      };
+      if (kind === 'due' && tm){ ev.allDay = false; ev.end = tm.end || addMin(tm.start, 30); }
+      var key = ev.date + '|' + ev.start + '|' + ev.title.toLowerCase();
+      if (seen[key]) continue; seen[key] = 1;
+      events.push(ev);
+    }
+  }
+  return events;
+}
+function addMin(hhmm, n){
+  var p = hhmm.split(':'), t = +p[0]*60 + +p[1] + n;
+  if (t >= 24*60) t = 24*60 - 1;
+  return pad(Math.floor(t/60)) + ':' + pad(t%60);
+}
+
+/* ---------- calendar output ---------- */
+function compact(dateStr){ return dateStr.replace(/-/g,''); }
+function gcalUrl(ev, tz){
+  var dates;
+  if (ev.allDay){
+    var endEx = ymd(addDays(fromYmd(ev.endDate || ev.date), 1));
+    dates = compact(ev.date) + '/' + compact(endEx);
+  } else {
+    var endDay = ev.date;
+    if (ev.end && ev.end <= ev.start) endDay = ymd(addDays(fromYmd(ev.date), 1));
+    dates = compact(ev.date) + 'T' + ev.start.replace(':','') + '00/' + compact(endDay) + 'T' + (ev.end || addMin(ev.start,60)).replace(':','') + '00';
+  }
+  var q = 'action=TEMPLATE&text=' + encodeURIComponent(ev.title || 'Event') + '&dates=' + dates +
+          '&details=' + encodeURIComponent(ev.notes ? ev.notes + '\n\n(from Paper Catch)' : '(from Paper Catch)');
+  if (ev.location) q += '&location=' + encodeURIComponent(ev.location);
+  if (!ev.allDay && tz) q += '&ctz=' + encodeURIComponent(tz);
+  return 'https://calendar.google.com/calendar/render?' + q;
+}
+function icsEsc(s){ return String(s||'').replace(/\\/g,'\\\\').replace(/\n/g,'\\n').replace(/([,;])/g,'\\$1'); }
+function fold(l){ var out = '', i = 0; while (l.length - i > 73){ out += l.slice(i, i+73) + '\r\n '; i += 73; } return out + l.slice(i); }
+function icsText(list, tz){
+  var now = new Date(), st = now.getUTCFullYear()+pad(now.getUTCMonth()+1)+pad(now.getUTCDate())+'T'+pad(now.getUTCHours())+pad(now.getUTCMinutes())+'00Z';
+  var L = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Sutton//Paper Catch//EN','CALSCALE:GREGORIAN'];
+  list.forEach(function(ev){
+    L.push('BEGIN:VEVENT', 'UID:' + ev.id + '-' + st + '@papercatch', 'DTSTAMP:' + st);
+    if (ev.allDay){
+      L.push('DTSTART;VALUE=DATE:' + compact(ev.date), 'DTEND;VALUE=DATE:' + compact(ymd(addDays(fromYmd(ev.endDate || ev.date), 1))));
+    } else {
+      var endDay = (ev.end && ev.end <= ev.start) ? ymd(addDays(fromYmd(ev.date),1)) : ev.date;
+      var tzp = tz ? ';TZID=' + tz : '';
+      L.push('DTSTART' + tzp + ':' + compact(ev.date) + 'T' + ev.start.replace(':','') + '00',
+             'DTEND' + tzp + ':' + compact(endDay) + 'T' + (ev.end || addMin(ev.start,60)).replace(':','') + '00');
+    }
+    L.push('SUMMARY:' + icsEsc(ev.title));
+    if (ev.location) L.push('LOCATION:' + icsEsc(ev.location));
+    if (ev.notes) L.push('DESCRIPTION:' + icsEsc(ev.notes));
+    L.push('END:VEVENT');
+  });
+  L.push('END:VCALENDAR');
+  return L.map(fold).join('\r\n') + '\r\n';
+}
+
+/* expose for testing */
+window.PaperCatch = {parse: parse, gcalUrl: gcalUrl, icsText: icsText, findTime: findTime, findDates: findDates};
+
+/* ---------- UI ---------- */
+var $ = function(id){ return document.getElementById(id); };
+var settings = store.get('settings', {len: 60, tz: ''});
+var defaultTz = 'America/New_York';
+try { defaultTz = Intl.DateTimeFormat().resolvedOptions().timeZone || defaultTz; } catch(e){}
+if (!settings.tz) settings.tz = defaultTz;
+var events = store.get('events', []);
+var history = store.get('history', []);
+
+$('setLen').value = String(settings.len);
+$('setTz').value = settings.tz;
+$('setLen').onchange = function(){ settings.len = +this.value; store.set('settings', settings); };
+$('setTz').onchange = function(){ settings.tz = this.value.trim() || defaultTz; this.value = settings.tz; store.set('settings', settings); };
+
+function toast(msg){ var t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toast._t); toast._t = setTimeout(function(){ t.classList.remove('show'); }, 2200); }
+function esc(s){ return String(s||'').replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+function niceDate(ev){
+  try {
+    var d = fromYmd(ev.date);
+    var s = d.toLocaleDateString(undefined, {weekday:'short', month:'short', day:'numeric'});
+    if (ev.endDate) s += ' – ' + fromYmd(ev.endDate).toLocaleDateString(undefined, {month:'short', day:'numeric'});
+    if (!ev.allDay && ev.start){
+      var p = ev.start.split(':'), h = +p[0];
+      s += ' · ' + ((h%12)||12) + ':' + p[1] + (h<12?' AM':' PM');
+    }
+    var diff = Math.round((d - new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()))/864e5);
+    if (diff < 0) s += ' · past';
+    return s;
+  } catch(e){ return ev.date; }
+}
+function save(){ store.set('events', events); }
+
+function render(){
+  var box = $('events');
+  $('bulk').style.display = events.length ? 'flex' : 'none';
+  if (!events.length){ box.innerHTML = '<div class="card empty">Dates you paste will show up here as events you can edit.</div>'; return; }
+  box.innerHTML = events.map(function(ev){
+    return '<div class="card ev k-' + ev.kind + (ev.added ? ' added' : '') + '" data-id="' + ev.id + '">' +
+      '<div class="evtop"><button class="chip" data-act="kind" type="button" title="Change type">' + KIND_LABEL[ev.kind] + '</button>' +
+      '<span class="when">' + esc(niceDate(ev)) + '</span><span class="done-badge">✓ Added</span>' +
+      '<button class="x" data-act="del" type="button" aria-label="Remove">×</button></div>' +
+      '<input class="title-in" data-f="title" value="' + esc(ev.title) + '" aria-label="Title">' +
+      '<div class="grid2"><div><label class="f">Date</label><input type="date" data-f="date" value="' + ev.date + '"></div>' +
+      '<div><label class="f">Ends (multi-day)</label><input type="date" data-f="endDate" value="' + (ev.endDate||'') + '"></div></div>' +
+      '<label class="toggle"><input type="checkbox" data-f="allDay"' + (ev.allDay ? ' checked' : '') + '> All day</label>' +
+      '<div class="grid2 times"' + (ev.allDay ? ' style="display:none"' : '') + '><div><label class="f">Start</label><input type="time" data-f="start" value="' + (ev.start||'') + '"></div>' +
+      '<div><label class="f">End</label><input type="time" data-f="end" value="' + (ev.end||'') + '"></div></div>' +
+      '<label class="f">Location</label><input data-f="location" value="' + esc(ev.location) + '" placeholder="Optional">' +
+      '<details class="srcbox"><summary>Notes / source text</summary><textarea data-f="notes" rows="3" style="margin-top:6px">' + esc(ev.notes) + '</textarea></details>' +
+      '<div class="acts"><a class="btn primary" data-act="gcal" target="_blank" rel="noopener" href="' + esc(gcalUrl(ev, settings.tz)) + '">' + (ev.added ? 'Add again' : 'Add to Google') + '</a>' +
+      '<button class="btn ghost" data-act="ics" type="button">.ics</button></div>' +
+    '</div>';
+  }).join('');
+}
+
+function evById(id){ for (var i=0;i<events.length;i++) if (events[i].id===id) return events[i]; return null; }
+
+$('events').addEventListener('input', onField);
+$('events').addEventListener('change', onField);
+function onField(e){
+  var f = e.target.getAttribute('data-f'); if (!f) return;
+  if (f === 'start' && e.type === 'input') return;            // handled on change so the length is kept
+  var card = e.target.closest('.ev'), ev = evById(card.getAttribute('data-id')); if (!ev) return;
+  if (f === 'allDay'){
+    ev.allDay = e.target.checked;
+    if (!ev.allDay && !ev.start){ ev.start = '09:00'; ev.end = addMin('09:00', settings.len); card.querySelector('[data-f=start]').value = ev.start; card.querySelector('[data-f=end]').value = ev.end; }
+    card.querySelector('.times').style.display = ev.allDay ? 'none' : '';
+  } else if (f === 'start' && e.type === 'change'){
+    var oldLen = 0;
+    if (ev.start && ev.end){ var a = ev.start.split(':'), b = ev.end.split(':'); oldLen = (+b[0]*60 + +b[1]) - (+a[0]*60 + +a[1]); }
+    ev.start = e.target.value;
+    if (ev.start){ ev.end = addMin(ev.start, oldLen > 0 ? oldLen : settings.len); card.querySelector('[data-f=end]').value = ev.end; }
+  } else {
+    ev[f] = e.target.value;
+  }
+  if (f === 'endDate' && ev.endDate && ev.endDate <= ev.date){ ev.endDate = ''; }
+  card.querySelector('[data-act=gcal]').href = gcalUrl(ev, settings.tz);
+  card.querySelector('.when').textContent = niceDate(ev);
+  save();
+}
+
+$('events').addEventListener('click', function(e){
+  var btn = e.target.closest('[data-act]'); if (!btn) return;
+  var card = btn.closest('.ev'), ev = evById(card.getAttribute('data-id')); if (!ev) return;
+  var act = btn.getAttribute('data-act');
+  if (act === 'del'){ events = events.filter(function(x){ return x !== ev; }); save(); render(); }
+  else if (act === 'kind'){
+    var order = ['event','school','appt','due'];
+    ev.kind = order[(order.indexOf(ev.kind)+1) % order.length]; save(); render();
+  }
+  else if (act === 'gcal'){
+    btn.href = gcalUrl(ev, settings.tz);
+    markAdded(ev);
+    setTimeout(render, 400);
+  }
+  else if (act === 'ics'){ downloadIcs([ev], slug(ev.title)); markAdded(ev); setTimeout(render, 400); }
+});
+
+function markAdded(ev){
+  ev.added = true; save();
+  history.unshift({t: ev.title, d: niceDate(ev), at: Date.now()});
+  history = history.slice(0, 25); store.set('history', history); renderHist();
+}
+function slug(s){ return (s||'event').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,40) || 'event'; }
+function downloadIcs(list, name){
+  var blob = new Blob([icsText(list, settings.tz)], {type:'text/calendar;charset=utf-8'});
+  var url = URL.createObjectURL(blob), a = document.createElement('a');
+  a.href = url; a.download = name + '.ics'; document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(url); a.remove(); }, 1500);
+}
+
+function renderHist(){
+  $('histCard').style.display = history.length ? '' : 'none';
+  $('hist').innerHTML = history.map(function(h){ return '<li><span>' + esc(h.t) + '</span><span class="d">' + esc(h.d.split(' · ')[0]) + '</span></li>'; }).join('');
+}
+
+$('findBtn').onclick = function(){
+  var txt = $('src').value;
+  if (!txt.trim()){ toast('Paste some text first'); return; }
+  var found = parse(txt, new Date(), settings.len);
+  if (!found.length){ toast('No dates found. Try "Add manually"'); return; }
+  events = found.concat(events.filter(function(x){ return !x.added; }));
+  save(); render();
+  toast(found.length + (found.length === 1 ? ' event found' : ' events found'));
+  setTimeout(function(){ var first = document.querySelector('.ev'); if (first) first.scrollIntoView({behavior:'smooth', block:'start'}); }, 50);
+};
+$('pasteBtn').onclick = function(){
+  if (!navigator.clipboard || !navigator.clipboard.readText){ $('src').focus(); toast('Long-press the box and tap Paste'); return; }
+  navigator.clipboard.readText().then(function(t){
+    if (!t){ toast('Clipboard is empty'); return; }
+    $('src').value = t; $('findBtn').onclick();
+  }).catch(function(){ $('src').focus(); toast('Long-press the box and tap Paste'); });
+};
+$('manualBtn').onclick = function(){
+  var d = new Date();
+  events.unshift({id:'e'+Math.random().toString(36).slice(2,9), kind:'event', title:'', date: ymd(d), endDate:'', allDay:false, start:'18:00', end: addMin('18:00', settings.len), location:'', notes:'', added:false});
+  save(); render(); var t = document.querySelector('.ev .title-in'); if (t) t.focus();
+};
+$('icsAll').onclick = function(){ if (events.length){ downloadIcs(events, 'paper-catch'); events.forEach(function(ev){ if (!ev.added) markAdded(ev); }); render(); } };
+$('clearEv').onclick = function(){ events = []; save(); render(); };
+$('clearHist').onclick = function(){ history = []; store.set('history', history); renderHist(); };
+
+render(); renderHist();
+})();
+</script>
+</body>
+</html>
