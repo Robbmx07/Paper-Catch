@@ -4,13 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Paper Catch</title>
-<meta name="theme-color" content="#1f3a5f">
+<meta name="theme-color" content="#1f3a5f" data-keep><!-- matches the navy header; the theme script leaves it alone -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Paper Catch">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAACkElEQVR42u3cMU4yQRiA4Y+NN/AAJIbCmsrQGe4hR5Cj4BW4B7G1orYg3sA7WJiQLYzR7MJ+M/O8B/hx53/4Biajs/lqE9JPdZZAcAgOwSE4BIfgEByCQ3AIDgkOwSE4BIfgEByCQ3AIDsEhwSE4BIfgEByCQ3AIDtXWTcKf6XTYlbiUH+/Hu/vlkH9hsd6meqJZqj/BUCiLM46IGOgjFZEsOIpm0ccxio8kRDoyLqek9DXpyOAjKY4qZVTjw1fZ7D4axVHx2BjRx4SrZHKYH/lwtDA2xvIx1VqZHOYHHHzAwQccfMDBBxx8wKHCfMDBBxx8wMEHHHzAwQccyukDDj7g4AMOPuDgAw4+wu/K/qfP56frvNDty76C379tBcfVWPRfbnIiE/qwrdhfyp8cVx4b/df94/C48Pt7b3IoHIIJDsEhOKZsqq+UGU474FD4a4JD38RNnZDC4f/MtiI4BIfgEBwSHIJDcCgcgvU7vr2Wu9zLh0c4sPjtEUohYltR+TgqGBvFPYvJIThUMY6yPufX8Swmh6r4Kvv9hnPOAUcT+4ttRXAIDsEhwSE4BIfgUDgECzfB4HATzLYinzmMDTfBZHIIDp/zPYvJITfBzAw3wWRbERyCQ3AIDsEhOCQ4FG6ChRM8N8HcBLOtCA43weAQHILD5/xwE0zhnMNNMOcc1le2FcEhOASH4BAcgkNwCA7BIcEhOASH4BAcgkNwCA7BMWaL9dbqJ18rk0MpcRgeyVfJ5FBWHIZH5vXpGn9+MrJvK3zkXJPZfLXJsyKnww6LPG+VXDgaJ5JtgmbEId9WBIfgEByCQ4JDcAgOwSE4BIfgEByCQ3AIDgkOwSE4BIfgEByCQ3AIDsEhwSE4NKgv6GLQ6j9ez64AAAAASUVORK5CYII=">
 <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAACkElEQVR42u3cMU4yQRiA4Y+NN/AAJIbCmsrQGe4hR5Cj4BW4B7G1orYg3sA7WJiQLYzR7MJ+M/O8B/hx53/4Biajs/lqE9JPdZZAcAgOwSE4BIfgEByCQ3AIDgkOwSE4BIfgEByCQ3AIDsEhwSE4BIfgEByCQ3AIDtXWTcKf6XTYlbiUH+/Hu/vlkH9hsd6meqJZqj/BUCiLM46IGOgjFZEsOIpm0ccxio8kRDoyLqek9DXpyOAjKY4qZVTjw1fZ7D4axVHx2BjRx4SrZHKYH/lwtDA2xvIx1VqZHOYHHHzAwQccfMDBBxx8wKHCfMDBBxx8wMEHHHzAwQccyukDDj7g4AMOPuDgAw4+wu/K/qfP56frvNDty76C379tBcfVWPRfbnIiE/qwrdhfyp8cVx4b/df94/C48Pt7b3IoHIIJDsEhOKZsqq+UGU474FD4a4JD38RNnZDC4f/MtiI4BIfgEBwSHIJDcCgcgvU7vr2Wu9zLh0c4sPjtEUohYltR+TgqGBvFPYvJIThUMY6yPufX8Swmh6r4Kvv9hnPOAUcT+4ttRXAIDsEhwSE4BIfgUDgECzfB4HATzLYinzmMDTfBZHIIDp/zPYvJITfBzAw3wWRbERyCQ3AIDsEhOCQ4FG6ChRM8N8HcBLOtCA43weAQHILD5/xwE0zhnMNNMOcc1le2FcEhOASH4BAcgkNwCA7BIcEhOASH4BAcgkNwCA7BMWaL9dbqJ18rk0MpcRgeyVfJ5FBWHIZH5vXpGn9+MrJvK3zkXJPZfLXJsyKnww6LPG+VXDgaJ5JtgmbEId9WBIfgEByCQ4JDcAgOwSE4BIfgEByCQ3AIDgkOwSE4BIfgEByCQ3AIDsEhwSE4NKgv6GLQ6j9ez64AAAAASUVORK5CYII=">
+<!-- Sutton Design System: theme switch + shared tokens + fonts -->
+<script src="https://robbmx07.github.io/sutton-hp/design/sutton-theme.js"></script>
+<link rel="stylesheet" href="https://robbmx07.github.io/sutton-hp/design/sutton.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#f4efe6; --paper:#fffdf8; --ink:#1c2a3a; --ink2:#5b6675; --line:#e4dccd;
@@ -85,12 +90,39 @@ details.srcbox summary{cursor:pointer}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 .settings{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 </style>
+<style id="sutton-map">
+/* Sutton Design System mapping for Paper Catch.
+   Kept on purpose: warm paper tones in light (your choice), navy header, coral "Add" buttons,
+   coral / teal / amber event kinds (due / appointment / school).
+   New: a dark theme that keeps navy + coral, Bricolage + Figtree fonts, 44px pill buttons, 14px cards, theme switch. */
+:root{--radius:var(--s-r,14px)}
+body{font-family:var(--s-body,"Figtree",-apple-system,"Segoe UI",sans-serif)}
+.brand h1,.toolbar h2,.step{font-family:var(--s-display,"Bricolage Grotesque",-apple-system,sans-serif)}
+.row>button,.acts>button,.btn,button.primary,button.ghost{border-radius:999px}
+.brand [data-sutton-theme]{margin-left:auto}
+@media (max-width:420px){.brand .s-theme span{display:none}.brand .s-theme{width:var(--s-tap,44px);padding:0;justify-content:center}}
+html:root[data-theme="dark"]{
+  --bg:#10161F; --paper:#18212D; --ink:#E6ECF3; --ink2:#9DA9B8; --line:#2A3546;
+  --navy:#7FA6D9; --coral:#F08A72; --coral2:#3A221C; --teal:#5FC4A8; --teal2:#17322C; --amber:#E7AC4C; --amber2:#382C14;
+  --shadow:none; --s-accent:#F08A72}
+html:root[data-theme="dark"] header{background:#1A2C45}
+html:root[data-theme="dark"] .num{background:#2A4466}
+html:root[data-theme="dark"] textarea,html:root[data-theme="dark"] input,html:root[data-theme="dark"] select{background:#0E141C}
+html:root[data-theme="dark"] textarea:focus,html:root[data-theme="dark"] input:focus,html:root[data-theme="dark"] select:focus{box-shadow:0 0 0 3px rgba(127,166,217,.2)}
+html:root[data-theme="dark"] .ghost{background:#222C39;color:var(--ink)}
+html:root[data-theme="dark"] .primary{color:#2A120C}
+html:root[data-theme="dark"] .chip{background:#1A2C45;color:var(--navy)}
+html:root[data-theme="dark"] .k-due .chip{color:var(--coral)}
+html:root[data-theme="dark"] .k-school .chip{color:var(--amber)}
+html:root[data-theme="dark"] .toast{color:var(--bg)}
+</style>
 </head>
 <body>
 <header>
   <div class="brand">
     <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><rect x="7" y="4" width="26" height="32" rx="4" fill="#fbf7ef"/><path d="M25 4l8 8h-8z" fill="#d9cfbd"/><rect x="11" y="13" width="10" height="3" rx="1.5" fill="#e8664d"/><rect x="11" y="19" width="17" height="2.5" rx="1.25" fill="#c9bfae"/><rect x="11" y="24" width="17" height="2.5" rx="1.25" fill="#c9bfae"/><rect x="11" y="29" width="12" height="2.5" rx="1.25" fill="#c9bfae"/></svg>
     <div><h1>Paper Catch</h1><p>Flyers, bills &amp; appointment cards → your calendar</p></div>
+    <span data-sutton-theme data-on-dark></span>
   </div>
 </header>
 <main>
